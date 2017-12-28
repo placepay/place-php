@@ -1,0 +1,23 @@
+{
+    "name": "rentshare/rentshare-php",
+    "type": "library",
+    "description": "A PHP library for Twilio's API",
+    "keywords": ["rentshare", "payments", "api"],
+    "homepage": "http://github.com/rentshare/rentshare-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RentShare Dev Team",
+            "email": "contact@rentshare.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "RentShare\\": "RentShare/"
+        }
+    }
+}
