@@ -8,7 +8,7 @@ To install from GitHub using [composer](https://getcomposer.org/):
 
 ```bash
 composer config repositories.rentshare-php vcs https://github.com/rentshare/rentshare-php.git
-composer require rentshare-php:master
+composer require rentshare/rentshare-php:master
 ```
 
 To manually install `rentshare-php`, you can [download the source](https://github.com/rentshare/rentshare-php/zipball/master) and include with:
