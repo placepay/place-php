@@ -23,6 +23,8 @@ require_once('/path/to/rentshare-php/import.php');
 
 ```php
 <?
+require_once('vendor/autoload.php');
+
 # set your api key
 RentShare\RentShare::$api_key = "private_key_6fsMi3GDxXg1XXSluNx1sLEd";
 
