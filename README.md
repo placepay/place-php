@@ -7,7 +7,7 @@ A php library for interfacing with the RentShare API
 To install from GitHub using [composer](https://getcomposer.org/):
 
 ```bash
-composer config repositories.rentshare-php vcs https://github.com/rentshare/rentshare-php.git
+composer config repositories.rentshare-php git https://github.com/rentshare/rentshare-php.git
 composer require rentshare/rentshare-php:master
 ```
 
