@@ -24,8 +24,10 @@ class APIResource {
 	 */
 	public static function new($obj, $client=null) {
 		$class = get_called_class();
-		if ( isset($obj['id']) && isset(self::$_object_index[$obj['id']]) )
+		if ( isset($obj['id']) && isset(self::$_object_index[$obj['id']]) ) {
+			self::$_object_index[$obj['id']]->_set_obj($obj);
 			return self::$_object_index[$obj['id']];
+		}
 		return new $class($obj, $client);
 	}
 
@@ -51,7 +53,7 @@ class APIResource {
 	 */
 	private function _set_obj($obj) {
 		$this->_obj = $obj;
-		$this->_obj = $this->_conv_object($this->_obj);
+		$this->_obj = self::_conv_object($this->_obj, $this->_client);
 		if ( isset($obj['id']) )
 			self::$_object_index[$obj['id']] = $this;
 	}
@@ -64,27 +66,29 @@ class APIResource {
 	 * @param unknown $inverse (optional)
 	 * @return unknown
 	 */
-	private function _conv_object($obj, $inverse=false) {
+	private static function _conv_object($obj, $client=null, $inverse=false) {
+		$new_obj = array();
 		foreach ($obj as $key => $val) {
+			$new_obj[$key] = $obj[$key];
 			if ( $inverse ) {
 				if ($val instanceof self) {
-					$val = $obj[$key] = $val->_obj;
+					$val = $new_obj[$key] = $val->_obj;
 				}
 			}
 			else if ( Utils::is_assoc( $val ) && isset($val['object']) ) {
 				foreach ( Utils::getSubclassesOf( APIResource::class ) as $resource ) {
 					if ( $val['object'] != $resource::$object_type )
 						continue;
-					$val = $obj[$key] = $resource::new($val, $this->_client);
+					$val = $new_obj[$key] = $resource::new($val, $client);
 					break;
 				}
 
 
 			}
 			if ( is_array($val) )
-				$obj[$key] = $this->_conv_object($val, $inverse);
+				$new_obj[$key] = self::_conv_object($val, $client, $inverse);
 		}
-		return $obj;
+		return $new_obj;
 	}
 
 
@@ -107,7 +111,7 @@ class APIResource {
 	 * @return unknown
 	 */
 	public function json() {
-		return json_encode($this->_conv_object($this->_obj, true), JSON_PRETTY_PRINT);
+		return json_encode(self::_conv_object($this->_obj, $this->_client, true), JSON_PRETTY_PRINT);
 	}
 
 
@@ -167,7 +171,7 @@ class APIResource {
 			foreach ( Utils::getSubclassesOf( APIException::class ) as $exc ) {
 				if ( $exc::$status_code != $status_code )
 					continue;
-				if ( $exc::$error_type && $exc::$error_type != Utils::$get_val( $obj, 'error_type') )
+				if ( $exc::$error_type && $exc::$error_type != Utils::get_val( $obj, 'error_type') )
 					continue;
 				throw new $exc(Utils::get_val($obj, 'error_description'));
 			}
@@ -215,7 +219,7 @@ class APIResource {
 	 */
 	public static function get($id, $update=null) {
 		if ( $update )
-			return self::request('POST', array('id'=>$id, 'json'=>$update));
+			return self::request('PUT', array('id'=>$id, 'json'=>$update));
 		return self::request('GET', array('id'=>$id));
 	}
 
@@ -229,7 +233,7 @@ class APIResource {
 		$update_all = Utils::get_val($filter_by, 'update_all');
 		if ( $update_all ) {
 			unset($filter_by['update_all']);
-			return self::request('POST', array('params'=>$filter_by, 'json'=>$update_all));
+			return self::request('PUT', array('params'=>$filter_by, 'json'=>$update_all));
 		}
 
 		$delete_all = Utils::get_val($filter_by, 'delete_all');
@@ -242,6 +246,15 @@ class APIResource {
 	}
 
 
+	public static function update_all($updates, $params=null) {
+		foreach ($updates as $key => $update ) {
+			$update[1]["id"] = $update[0]->id;
+			$updates[$key] = $update[1];
+		}
+		return self::request('PUT',
+							array( 'json'=>array("object"=>"list", "values"=>$updates), 'params'=>$params) );
+	}
+
 
 	/**
 	 *
@@ -250,9 +263,9 @@ class APIResource {
 	 */
 	public static function create($obj) {
 		if ( !Utils::is_assoc( $obj ) )
-			$obj = array("object"=>"list", "values"->$obj);
+			$obj = array("object"=>"list", "values"=>$obj);
 
-		$obj = self::_conv_object($obj, true);
+		$obj = self::_conv_object($obj, null, true);
 		return self::request('POST', array('json'=>$obj));
 	}
 

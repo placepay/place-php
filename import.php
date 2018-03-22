@@ -1,7 +1,6 @@
 <?php
 require(dirname(__FILE__) . '/RentShare/RentShare.php');
 require(dirname(__FILE__) . '/RentShare/Utils.php');
-require(dirname(__FILE__) . '/RentShare/Exceptions.php');
 require(dirname(__FILE__) . '/RentShare/Client.php');
 require(dirname(__FILE__) . '/RentShare/APIResource.php');
 require(dirname(__FILE__) . '/RentShare/AccessToken.php');
@@ -18,4 +17,14 @@ require(dirname(__FILE__) . '/RentShare/PaymentMethod.php');
 require(dirname(__FILE__) . '/RentShare/RecurringInvoice.php');
 require(dirname(__FILE__) . '/RentShare/Transaction.php');
 require(dirname(__FILE__) . '/RentShare/TransactionAllocation.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/APIException.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/InternalError.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/InvalidRequest.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/MethodNotAllowed.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/TooManyRequests.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/Forbidden.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/InvalidArguments.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/InvalidResponse.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/NotFound.php');
+require(dirname(__FILE__) . '/RentShare/Exceptions/Unauthorized.php');
 ?>
