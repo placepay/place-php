@@ -252,7 +252,7 @@ class APIResource {
 		if ( !Utils::is_assoc( $obj ) )
 			$obj = array("object"=>"list", "values"->$obj);
 
-		$obj = $this->_conv_object($obj, true);
+		$obj = self::_conv_object($obj, true);
 		return self::request('POST', array('json'=>$obj));
 	}
 
