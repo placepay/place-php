@@ -168,7 +168,7 @@ class APIResource {
 		if ($status_code != 200) {
 			if ( $object_type != 'error' )
 				throw new InvalidResponse('Expected error object');
-			foreach ( Utils::getSubclassesOf( APIException::class ) as $exc ) {
+			foreach ( Utils::getSubclassesOf( Exceptions\APIException::class ) as $exc ) {
 				if ( $exc::$status_code != $status_code )
 					continue;
 				if ( $exc::$error_type && $exc::$error_type != Utils::get_val( $obj, 'error_type') )
@@ -177,7 +177,7 @@ class APIResource {
 			}
 
 
-			throw new APIException(Utils::get_val($obj, 'error_description'));
+			throw new Exceptions\APIException(Utils::get_val($obj, 'error_description'));
 		}
 
 		if ( $object_type == 'list' ) {
