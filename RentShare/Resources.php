@@ -44,6 +44,12 @@ class Transaction extends APIResource {
 }
 
 
+class TransactionAllocation extends APIResource {
+	public static $resource = '/transaction_allocations';
+	public static $object_type = 'transaction_allocation';
+}
+
+
 class PaymentMethod extends APIResource {
 	public static $resource = '/payment_methods';
 	public static $object_type = 'payment_method';
