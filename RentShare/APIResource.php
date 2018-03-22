@@ -71,8 +71,8 @@ class APIResource {
 					$val = $obj[$key] = $val->_obj;
 				}
 			}
-			else if ( Util::is_assoc( $val ) && isset($val['object']) ) {
-				foreach ( Util::getSubclassesOf( APIResource::class ) as $resource ) {
+			else if ( Utils::is_assoc( $val ) && isset($val['object']) ) {
+				foreach ( Utils::getSubclassesOf( APIResource::class ) as $resource ) {
 					if ( $val['object'] != $resource::$object_type )
 						continue;
 					$val = $obj[$key] = $resource::new($val, $this->_client);
@@ -154,7 +154,7 @@ class APIResource {
 			throw new InvalidResponse();
 		}
 
-		if ( !Util::is_assoc($obj) )
+		if ( !Utils::is_assoc($obj) )
 			throw new InvalidResponse();
 
 		if ( !isset($obj['object']) )
@@ -164,16 +164,16 @@ class APIResource {
 		if ($status_code != 200) {
 			if ( $object_type != 'error' )
 				throw new InvalidResponse('Expected error object');
-			foreach ( Util::getSubclassesOf( APIException::class ) as $exc ) {
+			foreach ( Utils::getSubclassesOf( APIException::class ) as $exc ) {
 				if ( $exc::$status_code != $status_code )
 					continue;
-				if ( $exc::$error_type && $exc::$error_type != Util::$get_val( $obj, 'error_type') )
+				if ( $exc::$error_type && $exc::$error_type != Utils::$get_val( $obj, 'error_type') )
 					continue;
-				throw new $exc(Util::get_val($obj, 'error_description'));
+				throw new $exc(Utils::get_val($obj, 'error_description'));
 			}
 
 
-			throw new APIException(Util::get_val($obj, 'error_description'));
+			throw new APIException(Utils::get_val($obj, 'error_description'));
 		}
 
 		if ( $object_type == 'list' ) {
@@ -226,13 +226,13 @@ class APIResource {
 	 * @return unknown
 	 */
 	public static function select($filter_by=null) {
-		$update_all = Util::get_val($filter_by, 'update_all');
+		$update_all = Utils::get_val($filter_by, 'update_all');
 		if ( $update_all ) {
 			unset($filter_by['update_all']);
 			return self::request('POST', array('params'=>$filter_by, 'json'=>$update_all));
 		}
 
-		$delete_all = Util::get_val($filter_by, 'delete_all');
+		$delete_all = Utils::get_val($filter_by, 'delete_all');
 		if ( $delete_all ) {
 			unset($filter_by['delete_all']);
 			return self::request('DELETE', array('params'=>$filter_by));
@@ -249,7 +249,7 @@ class APIResource {
 	 * @return unknown
 	 */
 	public static function create($obj) {
-		if ( !Util::is_assoc( $obj ) )
+		if ( !Utils::is_assoc( $obj ) )
 			$obj = array("object"=>"list", "values"->$obj);
 
 		$obj = $this->_conv_object($obj, true);

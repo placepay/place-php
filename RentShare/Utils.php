@@ -8,7 +8,7 @@
 
 namespace RentShare;
 
-abstract class Util {
+abstract class Utils {
 
 	/**
 	 *
