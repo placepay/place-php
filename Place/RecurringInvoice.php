@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class RecurringInvoice extends APIResource {
 	public static $resource = '/recurring_invoices';

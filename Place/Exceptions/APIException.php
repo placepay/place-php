@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare\Exceptions;
+namespace Place\Exceptions;
 
 class APIException extends \Exception {
 	public static $error_type = null;

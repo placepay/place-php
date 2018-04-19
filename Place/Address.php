@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class Address extends APIResource {
 	public static $resource = '/addresses';

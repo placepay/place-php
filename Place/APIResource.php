@@ -1,17 +1,17 @@
 <?php
 /**
- * RentShare/APIResource.php
+ * Place/APIResource.php
  *
  * @package default
  */
 
 
-namespace RentShare;
+namespace Place;
 
 /**
  * Class APIResource
  *
- * @package RentShare
+ * @package Place
  */
 class APIResource {
 	public static $resource;
@@ -41,7 +41,7 @@ class APIResource {
 	 * @param unknown $client (optional)
 	 */
 	function __construct($obj, $client=null) {
-		$this->_client = isset($client) ? $client : RentShare::getDefaultClient();
+		$this->_client = isset($client) ? $client : Place::getDefaultClient();
 		$this->_set_obj($obj);
 	}
 
@@ -124,7 +124,7 @@ class APIResource {
 	public static function request($method, $params) {
 		$class  = get_called_class();
 		$path   = isset($params['path'])   ? $params['path']   : $class::$resource;
-		$client = isset($params['client']) ? $params['client'] : RentShare::getDefaultClient();
+		$client = isset($params['client']) ? $params['client'] : Place::getDefaultClient();
 		if ( isset($params['id']) )
 			$path = join('/', array($path, $params['id']));
 		$url = join('/', array($client->api_url, trim($path, '/')));
@@ -136,6 +136,9 @@ class APIResource {
 		curl_setopt($request, CURLOPT_USERPWD, $client->api_key . ":");
 		curl_setopt($request, CURLOPT_CUSTOMREQUEST, $method);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($request, CURLOPT_HTTPHEADER, array(
+				'X-API-Version: v2.5'
+			));
 
 		if ( isset($params['json']) ) {
 			$data = json_encode($params['json']);

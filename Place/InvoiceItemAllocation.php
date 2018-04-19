@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class InvoiceItemAllocation extends APIResource {
 	public static $resource = '/invoice_item_allocations';

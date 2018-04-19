@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class Event extends APIResource {
 	public static $resource = '/events';

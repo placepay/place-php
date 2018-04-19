@@ -1,13 +1,13 @@
 {
-    "name": "rentshare/rentshare-php",
+    "name": "placepay/place-php",
     "type": "library",
-    "description": "A PHP library for RentShare's API",
+    "description": "A PHP library for Place's API",
     "keywords": ["rentshare", "payments", "api"],
-    "homepage": "http://github.com/rentshare/rentshare-php",
+    "homepage": "http://github.com/placepay/place-php",
     "license": "MIT",
     "authors": [
         {
-            "name": "RentShare Dev Team",
+            "name": "Place Dev Team",
             "email": "contact@rentshare.com"
         }
     ],
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RentShare\\": "RentShare/"
+            "Place\\": "Place/"
         }
     }
 }

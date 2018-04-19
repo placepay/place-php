@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare\Exceptions;
+namespace Place\Exceptions;
 
 class InvalidResponse extends APIException {}
 

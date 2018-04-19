@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class PaymentMethod extends APIResource {
 	public static $resource = '/payment_methods';

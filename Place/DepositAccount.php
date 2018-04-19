@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class DepositAccount extends APIResource {
 	public static $resource = '/deposit_accounts';

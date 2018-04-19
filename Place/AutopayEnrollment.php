@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class AutopayEnrollment extends APIResource {
 	public static $resource = '/autopay_enrollments';

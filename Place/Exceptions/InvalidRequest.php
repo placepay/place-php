@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare\Exceptions;
+namespace Place\Exceptions;
 
 class InvalidRequest extends APIException {
 	public static $error_type = 'Error';

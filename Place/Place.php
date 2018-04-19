@@ -1,19 +1,19 @@
 <?php
 /**
- * RentShare/RentShare.php
+ * Place/Place.php
  *
  * @package default
  */
 
 
-namespace RentShare;
+namespace Place;
 
-class RentShare {
+class Place {
 	public static $api_key;
-	public static $api_url = 'https://api.rentshare.com';
+	public static $api_url = 'https://api.placepay.com';
 
-	public static $PROD_URL = 'https://api.rentshare.com';
-	public static $TEST_URL = 'https://staging-api.rentshare.com';
+	public static $PROD_URL = 'https://api.placepay.com';
+	public static $TEST_URL = 'https://test-api.placepay.com';
 
 	private static $_default_client = null;
 

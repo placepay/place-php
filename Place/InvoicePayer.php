@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class InvoicePayer extends APIResource {
 	public static $resource = '/invoice_payers';

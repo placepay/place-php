@@ -1,6 +1,6 @@
 <?php
 
-namespace RentShare;
+namespace Place;
 
 class Transaction extends APIResource {
 	public static $resource = '/transactions';

@@ -1,5 +1,5 @@
 <?php
-namespace RentShare;
+namespace Place;
 
 class AccessToken extends APIResource {
 	public static $resource = '/access_tokens';

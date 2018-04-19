@@ -1,12 +1,12 @@
 <?php
 /**
- * RentShare/Utils.php
+ * Place/Utils.php
  *
  * @package default
  */
 
 
-namespace RentShare;
+namespace Place;
 
 abstract class Utils {
 
