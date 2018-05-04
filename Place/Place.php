@@ -17,7 +17,7 @@ class Place {
 
 	private static $_default_client = null;
 
-	const VERSION = '0.5.1';
+	const VERSION = '0.5.2';
 
 
 
