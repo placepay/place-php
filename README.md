@@ -9,7 +9,7 @@ To install from GitHub using [composer](https://getcomposer.org/):
 ```bash
 composer config minimum-stability dev
 composer config repositories.place-php git https://github.com/placepay/place-php.git
-composer require placepay/place-php:master
+composer require place/place-php:master
 ```
 
 To manually install `place-php`, you can [download the source](https://github.com/placepay/place-php/zipball/master) and include with:
@@ -23,7 +23,7 @@ require_once('/path/to/place-php/import.php');
 ## Basic usage
 
 ```php
-<?
+<?php
 require_once('vendor/autoload.php');
 
 # set your api key
