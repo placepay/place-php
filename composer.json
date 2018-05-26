@@ -1,14 +1,14 @@
 {
-    "name": "placepay/place-php",
+    "name": "place/place-php",
     "type": "library",
     "description": "A PHP library for Place's API",
-    "keywords": ["rentshare", "payments", "api"],
+    "keywords": ["place", "payments", "api"],
     "homepage": "http://github.com/placepay/place-php",
     "license": "MIT",
     "authors": [
         {
             "name": "Place Dev Team",
-            "email": "contact@rentshare.com"
+            "email": "contact@placepay.com"
         }
     ],
     "require": {
