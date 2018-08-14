@@ -1,5 +1,5 @@
 {
-    "name": "place/place-php",
+    "name": "place/place-api",
     "type": "library",
     "description": "A PHP library for Place's API",
     "keywords": ["place", "payments", "api"],

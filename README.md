@@ -7,10 +7,10 @@ A php library for interfacing with the Place API
 To install from GitHub using [composer](https://getcomposer.org/):
 
 ```bash
-composer require place/place-php
+composer require place/place-api
 ```
 
-To manually install `place-php`, you can [download the source](https://github.com/placepay/place-php/zipball/master) and include with:
+To manually install `place-api`, you can [download the source](https://github.com/placepay/place-php/zipball/master) and include with:
 
 ```php
 <?php
