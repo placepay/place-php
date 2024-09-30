@@ -135,11 +135,14 @@ class APIResource {
 		$request = curl_init($url);
 		curl_setopt($request, CURLOPT_USERPWD, $client->api_key . ":");
 		curl_setopt($request, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($request, CURLINFO_HEADER_OUT, true);
+        curl_setopt($request, CURLOPT_HEADER, true);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($request, CURLOPT_HTTPHEADER, array(
 				'X-API-Version: v2.5'
 			));
 
+        $data = '';
 		if ( isset($params['json']) ) {
 			$data = json_encode($params['json']);
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
@@ -153,24 +156,43 @@ class APIResource {
 		$status_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 
+        list ($resHeaders, $response) = explode("\r\n\r\n", $response, 2);
+
+        $httpRequest = curl_getinfo($request, CURLINFO_HEADER_OUT)
+            .$data;
+
+        $httpResponse = $resHeaders
+            . "\r\n\r\n"
+            . $response;
+
 		$obj = json_decode($response, true);
 
 		if ( $obj === null ) {
 			if ( $status_code == 500 )
-				throw new InternalError();
-			throw new InvalidResponse();
+				throw (new Exceptions\InternalError(json_last_error_msg()))
+                    ->withRequest($httpRequest)
+                    ->withResponse($httpResponse);
+			throw (new Exceptions\InvalidResponse(json_last_error_msg()))
+                ->withRequest($httpRequest)
+                ->withResponse($httpResponse);
 		}
 
 		if ( !Utils::is_assoc($obj) )
-			throw new InvalidResponse();
+			throw (new Exceptions\InvalidResponse())
+                ->withRequest($httpRequest)
+                ->withResponse($httpResponse);
 
 		if ( !isset($obj['object']) )
-			throw new InvalidResponse('Response missing "object" attribute');
+			throw (new Exceptions\InvalidResponse('Response missing "object" attribute'))
+                ->withRequest($httpRequest)
+                ->withResponse($httpResponse);
 		$object_type = $obj['object'];
 
 		if ($status_code != 200) {
 			if ( $object_type != 'error' )
-				throw new InvalidResponse('Expected error object');
+				throw (new Exceptions\InvalidResponse('Expected error object'))
+                    ->withRequest($httpRequest)
+                    ->withResponse($httpResponse);
 			foreach ( Utils::getSubclassesOf( Exceptions\APIException::class ) as $exc ) {
 				if ( $exc::$status_code != $status_code )
 					continue;
@@ -180,7 +202,9 @@ class APIResource {
 			}
 
 
-			throw new Exceptions\APIException(Utils::get_val($obj, 'error_description'));
+			throw (new Exceptions\APIException(Utils::get_val($obj, 'error_description')))
+                ->withRequest($httpRequest)
+                ->withResponse($httpResponse);
 		}
 
 		if ( $object_type == 'list' ) {
