@@ -154,13 +154,14 @@ class APIResource {
 
 		$response    = curl_exec($request);
 		$status_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
-		curl_close($request);
 
         list ($resHeaders, $response) = explode("\r\n\r\n", $response, 2);
 
         $httpRequest = curl_getinfo($request, CURLINFO_HEADER_OUT)
             .$data;
 
+        curl_close($request);
+        
         $httpResponse = $resHeaders
             . "\r\n\r\n"
             . $response;
@@ -186,6 +187,7 @@ class APIResource {
 			throw (new Exceptions\InvalidResponse('Response missing "object" attribute'))
                 ->withRequest($httpRequest)
                 ->withResponse($httpResponse);
+
 		$object_type = $obj['object'];
 
 		if ($status_code != 200) {
